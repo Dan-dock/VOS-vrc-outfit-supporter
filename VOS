@@ -1,0 +1,726 @@
+bl_info = {
+    "name": "VRC Avatar Outfit Support",
+    "author": "Gusin",
+    "description": "contect discord: gusin6974.",
+    "blender": (3, 3, 0),
+    "version": (1, 0, 0),
+    "location": "3D Viewport > Sidebar > Tool",
+    "category": "3D View"
+}
+
+import bpy
+import re
+import webbrowser
+CONSTRAINT_ID = "Copy Transforms Constraint"
+
+# Auto-Symmetric Toggle
+def is_auto_symmetric_enabled(context):
+    return context.scene.sna_auto_symmetric
+
+class SNA_PT_CopyBoneTransformsPanel(bpy.types.Panel):
+    """Panel for Copy Bone Transforms"""
+    bl_label = "VRC Outfit Supporter"
+    bl_idname = "SNA_PT_COPY_BONE_TRANSFORMS"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'Tool'
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+
+        layout.prop_search(scene, "sna_source_object", bpy.data, "objects", text="Base")
+        layout.prop_search(scene, "sna_target_object", bpy.data, "objects", text="Change")
+
+        source = scene.sna_source_object
+        target = scene.sna_target_object
+
+        if source and target and source.type == "ARMATURE" and target.type == "ARMATURE":
+            layout.operator("sna.add_copy_transforms", text="Match bone Oneclick", icon='OUTLINER_OB_ARMATURE')
+            
+            layout.separator()
+            layout.label(text="Manual Setting:")
+
+            layout.prop(scene, "sna_source_bone", text="Stick")
+            layout.prop(scene, "sna_target_bone", text="Octahedral")
+
+            row = layout.row()
+            row.operator("sna.add_manual_constraint", text="Add Manual", icon='BONE_DATA')
+            row.operator("sna.remove_copy_transforms", text="Remove", icon='CANCEL')
+
+            layout.separator()
+            row = layout.row()
+            row.operator("sna.disconnect_all_bones", text="All", icon='CANCEL')
+            row.operator("sna.disconnect_selected_bones", text="Selected", icon='CANCEL')
+            
+            layout.separator()
+            layout.operator("sna.apply_constraints_to_bones", text="Apply", icon='FILE_TICK')
+
+            layout.separator()
+            row = layout.row()
+            row.scale_x = 1.5  # Adjust as needed
+            row.operator("wm.open_help_link", icon='QUESTION')
+            row.operator("wm.open_support_link", text="Credit", icon='INFO')
+            
+        else:
+            layout.label(text="Select valid armatures.", icon='ERROR')
+
+class OT_OpenSupportLink(bpy.types.Operator):
+    """Open Support Link"""
+    bl_idname = "wm.open_support_link"
+    bl_label = "Support Me!"
+
+    def execute(self, context):
+        # Replace the URL below with your desired link
+        webbrowser.open("https://paypal.me/ijgusin?country.x=KR&locale.x=ko_KR")
+        return {'FINISHED'}
+
+class OT_OpenHelpLink(bpy.types.Operator):
+    """Open Help Link"""
+    bl_idname = "wm.open_help_link"
+    bl_label = "Need help?"
+
+    def execute(self, context):
+        # Replace the URL below with your desired link
+        webbrowser.open("https://www.youtube.com/")
+        return {'FINISHED'}
+
+class SNA_OT_AddCopyTransforms(bpy.types.Operator):
+    """Add Copy Transforms Constraints to All Bones"""
+    bl_idname = "sna.add_copy_transforms"
+    bl_label = "Add All Copy Transforms"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def is_matching(self, source_name, target_name):
+        """Determine if source and target bone names match."""
+        source_name = source_name.lower()
+        target_name = target_name.lower()
+
+        # Direct match
+        if source_name == target_name:
+            return True
+
+        # Additional pattern-based matching
+        cleaned_source = re.sub(r'[._\s\-]', '', source_name)  # Remove special characters
+        cleaned_target = re.sub(r'[._\s\-]', '', target_name)
+        patterns = [
+            (r'\.L$', r'_L$'),
+            (r'\.R$', r'_R$'),
+            (r'Right', r'R'),
+            (r'Left', r'L')
+        ]
+        for src_pattern, tgt_pattern in patterns:
+            if re.sub(src_pattern, '', source_name) == re.sub(tgt_pattern, '', target_name):
+                return True
+
+        return cleaned_source == cleaned_target
+
+class SNA_OT_AddCopyTransforms(bpy.types.Operator):
+    """Add Copy Transforms Constraints to All Bones"""
+    bl_idname = "sna.add_copy_transforms"
+    bl_label = "Add All Copy Transforms"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def is_matching(self, source_name, target_name):
+        """Determine if source and target bone names match."""
+        source_name = source_name.lower()
+        target_name = target_name.lower()
+
+        # Direct match
+        if source_name == target_name:
+            return True
+
+        # Additional pattern-based matching
+        cleaned_source = re.sub(r'[._\s\-]', '', source_name)  # Remove special characters
+        cleaned_target = re.sub(r'[._\s\-]', '', target_name)
+        patterns = [
+            (r'\.L$', r'_L$'),
+            (r'\.R$', r'_R$'),
+            (r'Right', r'R'),
+            (r'Left', r'L')
+        ]
+        for src_pattern, tgt_pattern in patterns:
+            if re.sub(src_pattern, '', source_name) == re.sub(tgt_pattern, '', target_name):
+                return True
+
+        return cleaned_source == cleaned_target
+
+class SNA_OT_AddCopyTransforms(bpy.types.Operator):
+    """Add Copy Transforms Constraints to All Bones"""
+    bl_idname = "sna.add_copy_transforms"
+    bl_label = "Add All Copy Transforms"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def is_matching(self, source_name, target_name):
+        """Determine if source and target bone names match."""
+        source_name = source_name.lower()
+        target_name = target_name.lower()
+
+        # Direct match
+        if source_name == target_name:
+            return True
+
+        # Additional pattern-based matching
+        cleaned_source = re.sub(r'[._\s\-]', '', source_name)  # Remove special characters
+        cleaned_target = re.sub(r'[._\s\-]', '', target_name)
+        patterns = [
+            (r'\.L$', r'_L$'),
+            (r'\.R$', r'_R$'),
+            (r'Right', r'R'),
+            (r'Left', r'L')
+        ]
+        for src_pattern, tgt_pattern in patterns:
+            if re.sub(src_pattern, '', source_name) == re.sub(tgt_pattern, '', target_name):
+                return True
+
+        return cleaned_source == cleaned_target
+        
+    def execute(self, context):
+        source = context.scene.sna_source_object
+        target = context.scene.sna_target_object
+
+        if not source or not target or source.type != "ARMATURE" or target.type != "ARMATURE":
+            self.report({'ERROR'}, "Both source and target must be valid armatures.")
+            return {'CANCELLED'}
+
+        # Ensure both armatures are in Pose Mode
+        for obj in [source, target]:
+            if obj.mode != 'POSE':
+                bpy.context.view_layer.objects.active = obj
+                bpy.ops.object.mode_set(mode='POSE')
+
+        # Change the source armature display to Stick for easier comparison
+        source.display_type = 'WIRE'
+        target.display_type = 'SOLID'
+        source.data.display_type = 'STICK'
+
+        # Add constraints to matching bones
+        added_constraints = 0
+        for source_bone in source.pose.bones:
+            for target_bone in target.pose.bones:
+                if self.is_matching(source_bone.name, target_bone.name):
+                    # Add constraint
+                    constraint = target_bone.constraints.new(type='COPY_TRANSFORMS')
+                    constraint.name = "Copy Transforms"
+                    constraint.target = source
+                    constraint.subtarget = source_bone.name
+                    added_constraints += 1
+                    break  # Stop after finding the first match
+
+        self.report({'INFO'}, f"Added {added_constraints} 'Copy Transforms' constraints.")
+        return {'FINISHED'}
+
+
+
+
+class SNA_OT_RemoveCopyTransforms(bpy.types.Operator):
+    """Remove Copy Transforms Constraints from Selected Bones and Their Symmetric Counterparts"""
+    bl_idname = "sna.remove_copy_transforms"
+    bl_label = "Remove Selected Copy Transforms with Symmetry"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    @staticmethod
+    def get_mirror_name(bone_name):
+        """Infer the mirrored bone name based on common naming patterns."""
+        patterns = [
+            (r'\.L$', '.R'),
+            (r'\.R$', '.L'),
+            (r'_L$', '_R'),
+            (r'_R$', '_L'),
+            (r'Left', 'Right'),
+            (r'Right', 'Left')
+        ]
+        for src_pattern, tgt_pattern in patterns:
+            if re.search(src_pattern, bone_name):
+                return re.sub(src_pattern, tgt_pattern, bone_name)
+        return None  # No mirrored counterpart inferred
+
+    def execute(self, context):
+        target = context.scene.sna_target_object
+
+        if not target or target.type != "ARMATURE":
+            self.report({'ERROR'}, "A valid target armature must be selected.")
+            return {'CANCELLED'}
+
+        # Ensure we're in pose mode to get selected bones
+        if bpy.context.mode != 'POSE':
+            self.report({'ERROR'}, "Please switch to Pose Mode to select bones.")
+            return {'CANCELLED'}
+
+        removed_constraints = 0
+        # Remove constraints from selected bones and their mirrored counterparts
+        for bone in target.pose.bones:
+            if bone.bone.select:  # Check if the bone is selected
+                # Remove constraints from the selected bone
+                constraints_to_remove = [
+                    c for c in bone.constraints if c.name.startswith("Copy Transforms")
+                ]
+                for constraint in constraints_to_remove:
+                    bone.constraints.remove(constraint)
+                    removed_constraints += 1
+
+                # Handle symmetric counterpart
+                mirrored_bone_name = self.get_mirror_name(bone.name)
+                if mirrored_bone_name and mirrored_bone_name in target.pose.bones:
+                    mirrored_bone = target.pose.bones[mirrored_bone_name]
+                    mirrored_constraints_to_remove = [
+                        c for c in mirrored_bone.constraints if c.name.startswith("Copy Transforms")
+                    ]
+                    for constraint in mirrored_constraints_to_remove:
+                        mirrored_bone.constraints.remove(constraint)
+                        removed_constraints += 1
+
+        self.report({'INFO'}, f"Removed {removed_constraints} 'Copy Transforms' constraints from selected bones and their symmetric counterparts.")
+        return {'FINISHED'}
+
+
+
+class SNA_OT_AddManualConstraint(bpy.types.Operator):
+    """Add Manual Copy Transforms Constraint with Symmetry"""
+    bl_idname = "sna.add_manual_constraint"
+    bl_label = "Add Manual Copy Transforms with Symmetry"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    CONSTRAINT_ID = "Copy Transforms"
+
+    @staticmethod
+    def get_mirror_name(bone_name):
+        """Infer the mirrored bone name based on common naming patterns."""
+        patterns = [
+            (r'\.L$', '.R'),
+            (r'\.R$', '.L'),
+            (r'_L$', '_R'),
+            (r'_R$', '_L'),
+            (r'Left', 'Right'),
+            (r'Right', 'Left')
+        ]
+        for src_pattern, tgt_pattern in patterns:
+            if re.search(src_pattern, bone_name):
+                return re.sub(src_pattern, tgt_pattern, bone_name)
+        return None  # No mirrored counterpart inferred
+
+    def execute(self, context):
+        source = context.scene.sna_source_object
+        target = context.scene.sna_target_object
+        source_bone = context.scene.sna_source_bone
+        target_bone = context.scene.sna_target_bone
+
+        if not source or not target:
+            self.report({'ERROR'}, "Both source and target armatures must be selected.")
+            return {'CANCELLED'}
+        if source_bone not in source.pose.bones:
+            self.report({'ERROR'}, f"Source bone '{source_bone}' does not exist in the source armature.")
+            return {'CANCELLED'}
+        if target_bone not in target.pose.bones:
+            self.report({'ERROR'}, f"Target bone '{target_bone}' does not exist in the target armature.")
+            return {'CANCELLED'}
+
+        def add_constraint(source_name, target_name):
+            """Helper to add a constraint from source to target."""
+            target_bone_obj = target.pose.bones[target_name]
+            # Remove existing constraints with the same name
+            for constraint in target_bone_obj.constraints:
+                if constraint.name == self.CONSTRAINT_ID:
+                    target_bone_obj.constraints.remove(constraint)
+
+            # Add new constraint
+            constraint = target_bone_obj.constraints.new(type='COPY_TRANSFORMS')
+            constraint.name = self.CONSTRAINT_ID
+            constraint.target = source
+            constraint.subtarget = source_name
+
+        # Add constraint to the original bones
+        add_constraint(source_bone, target_bone)
+
+        # Handle mirrored counterparts
+        mirrored_source_bone = self.get_mirror_name(source_bone)
+        mirrored_target_bone = self.get_mirror_name(target_bone)
+
+        if mirrored_source_bone and mirrored_target_bone:
+            if mirrored_source_bone in source.pose.bones and mirrored_target_bone in target.pose.bones:
+                add_constraint(mirrored_source_bone, mirrored_target_bone)
+                self.report(
+                    {'INFO'},
+                    f"Added symmetric constraint: {mirrored_source_bone} -> {mirrored_target_bone}."
+                )
+        else:
+            self.report({'INFO'}, f"No symmetric counterparts found for {source_bone} or {target_bone}.")
+
+        self.report({'INFO'}, f"Added constraint: {source_bone} -> {target_bone}.")
+        return {'FINISHED'}
+
+
+def update_bone_selection(scene, context):
+    """Update the selected bones automatically"""
+    source = scene.sna_source_object
+    target = scene.sna_target_object
+
+    if source and source.type == 'ARMATURE':
+        selected_source = [b.name for b in source.pose.bones if b.bone.select]
+        if selected_source:
+            scene.sna_source_bone = selected_source[0]
+
+    if target and target.type == 'ARMATURE':
+        selected_target = [b.name for b in target.pose.bones if b.bone.select]
+        if selected_target:
+            scene.sna_target_bone = selected_target[0]
+
+class SNA_OT_AddManualConstraint(bpy.types.Operator):
+    """Add Manual Copy Transforms Constraint with Symmetry"""
+    bl_idname = "sna.add_manual_constraint"
+    bl_label = "Add Manual Copy Transforms with Symmetry"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    CONSTRAINT_ID = "Copy Transforms"
+
+    @staticmethod
+    def get_mirror_name(bone_name):
+        """Infer the mirrored bone name based on common naming patterns."""
+        patterns = [
+            (r'\.L$', '.R'),
+            (r'\.R$', '.L'),
+            (r'_L$', '_R'),
+            (r'_R$', '_L'),
+            (r'Left', 'Right'),
+            (r'Right', 'Left')
+        ]
+        for src_pattern, tgt_pattern in patterns:
+            if re.search(src_pattern, bone_name):
+                return re.sub(src_pattern, tgt_pattern, bone_name)
+        return None  # No mirrored counterpart inferred
+
+    def execute(self, context):
+        source = context.scene.sna_source_object
+        target = context.scene.sna_target_object
+        source_bone = context.scene.sna_source_bone
+        target_bone = context.scene.sna_target_bone
+
+        if not source or not target:
+            self.report({'ERROR'}, "Both source and target armatures must be selected.")
+            return {'CANCELLED'}
+        if source_bone not in source.pose.bones:
+            self.report({'ERROR'}, f"Source bone '{source_bone}' does not exist in the source armature.")
+            return {'CANCELLED'}
+        if target_bone not in target.pose.bones:
+            self.report({'ERROR'}, f"Target bone '{target_bone}' does not exist in the target armature.")
+            return {'CANCELLED'}
+
+        def add_constraint(source_name, target_name):
+            """Helper to add a constraint from source to target."""
+            target_bone_obj = target.pose.bones[target_name]
+            # Remove existing constraints with the same name
+            for constraint in target_bone_obj.constraints:
+                if constraint.name == self.CONSTRAINT_ID:
+                    target_bone_obj.constraints.remove(constraint)
+
+            # Add new constraint
+            constraint = target_bone_obj.constraints.new(type='COPY_TRANSFORMS')
+            constraint.name = self.CONSTRAINT_ID
+            constraint.target = source
+            constraint.subtarget = source_name
+
+        # Add constraint to the original bones
+        add_constraint(source_bone, target_bone)
+
+        # Handle mirrored counterparts
+        mirrored_source_bone = self.get_mirror_name(source_bone)
+        mirrored_target_bone = self.get_mirror_name(target_bone)
+
+        if mirrored_source_bone and mirrored_target_bone:
+            if mirrored_source_bone in source.pose.bones and mirrored_target_bone in target.pose.bones:
+                add_constraint(mirrored_source_bone, mirrored_target_bone)
+                self.report(
+                    {'INFO'},
+                    f"Added symmetric constraint: {mirrored_source_bone} -> {mirrored_target_bone}."
+                )
+        else:
+            self.report({'INFO'}, f"No symmetric counterparts found for {source_bone} or {target_bone}.")
+
+        self.report({'INFO'}, f"Added constraint: {source_bone} -> {target_bone}.")
+        return {'FINISHED'}
+
+class SNA_OT_PickSourceBone(bpy.types.Operator):
+    """Pick Source Bone"""
+    bl_idname = "sna.pick_source_bone"
+    bl_label = "Pick Source Bone"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        source = context.scene.sna_source_object
+
+        if not source or source.type != 'ARMATURE':
+            self.report({'ERROR'}, "Please select a valid source armature.")
+            return {'CANCELLED'}
+
+        # Ensure the source armature is in Pose Mode
+        bpy.context.view_layer.objects.active = source
+        bpy.ops.object.mode_set(mode='POSE')
+
+        # Check for the selected bone
+        selected_bones = [bone.name for bone in source.pose.bones if bone.bone.select]
+        if selected_bones:
+            context.scene.sna_source_bone = selected_bones[0]
+            self.report({'INFO'}, f"Source bone set to: {selected_bones[0]}")
+            return {'FINISHED'}
+        else:
+            self.report({'ERROR'}, "No bone selected in the source armature.")
+            return {'CANCELLED'}
+
+
+class SNA_OT_PickTargetBone(bpy.types.Operator):
+    """Pick Target Bone"""
+    bl_idname = "sna.pick_target_bone"
+    bl_label = "Pick Target Bone"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        target = context.scene.sna_target_object
+
+        if not target or target.type != 'ARMATURE':
+            self.report({'ERROR'}, "Please select a valid target armature.")
+            return {'CANCELLED'}
+
+        # Ensure the target armature is in Pose Mode
+        bpy.context.view_layer.objects.active = target
+        bpy.ops.object.mode_set(mode='POSE')
+
+        # Check for the selected bone
+        selected_bones = [bone.name for bone in target.pose.bones if bone.bone.select]
+        if selected_bones:
+            context.scene.sna_target_bone = selected_bones[0]
+            self.report({'INFO'}, f"Target bone set to: {selected_bones[0]}")
+            return {'FINISHED'}
+        else:
+            self.report({'ERROR'}, "No bone selected in the target armature.")
+            return {'CANCELLED'}
+
+
+class SNA_OT_DisconnectAllBones(bpy.types.Operator):
+    """Disconnect All Bones in the Target Armature"""
+    bl_idname = "sna.disconnect_all_bones"
+    bl_label = "Disconnect All Bones"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        target = context.scene.sna_target_object
+
+        if not target or target.type != "ARMATURE":
+            self.report({'ERROR'}, "A valid target armature must be selected.")
+            return {'CANCELLED'}
+
+        # Ensure we are in Edit Mode
+        if target.mode != 'EDIT':
+            bpy.context.view_layer.objects.active = target
+            bpy.ops.object.mode_set(mode='EDIT')
+
+        # Disconnect all bones
+        for bone in target.data.edit_bones:
+            bone.use_connect = False
+
+        self.report({'INFO'}, "All bones in the target armature have been disconnected.")
+        return {'FINISHED'}
+
+class SNA_OT_DisconnectSelectedBones(bpy.types.Operator):
+    """Disconnect Selected Bones in the Target Armature (Seamless)"""
+    bl_idname = "sna.disconnect_selected_bones"
+    bl_label = "Disconnect Selected Bones"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    @staticmethod
+    def get_mirror_name(bone_name):
+        """Infer the mirrored bone name based on common naming patterns."""
+        patterns = [
+            (r'\.L$', '.R'),
+            (r'\.R$', '.L'),
+            (r'_L$', '_R'),
+            (r'_R$', '_L'),
+            (r'L_$', 'R_'),
+            (r'R_$', 'L_'),
+            (r'R$', 'L'),
+            (r'R.$', 'L.'),
+            (r'L.$', 'R.'),
+            (r'Left', 'Right'),
+            (r'Right', 'Left')
+        ]
+        for src_pattern, tgt_pattern in patterns:
+            if re.search(src_pattern, bone_name):
+                return re.sub(src_pattern, tgt_pattern, bone_name)
+        return None  # No mirrored counterpart inferred
+
+    def execute(self, context):
+        target = context.scene.sna_target_object
+
+        if not target or target.type != "ARMATURE":
+            self.report({'ERROR'}, "A valid target armature must be selected.")
+            return {'CANCELLED'}
+
+        # Temporarily switch to Edit Mode
+        original_mode = target.mode
+        if original_mode != 'EDIT':
+            bpy.ops.object.mode_set(mode='EDIT')
+
+        # Disconnect selected bones and their symmetric counterparts
+        disconnected_bones = 0
+        processed_bones = set()  # To avoid processing the same bone twice
+
+        for bone in target.data.edit_bones:  # Access edit bones
+            if bone.select and bone.name not in processed_bones:  # Check if the bone is selected
+                # Disconnect the selected bone
+                if bone.use_connect:
+                    bone.use_connect = False
+                    disconnected_bones += 1
+                    processed_bones.add(bone.name)
+
+                # Find and disconnect the symmetric counterpart
+                mirrored_name = self.get_mirror_name(bone.name)
+                if mirrored_name and mirrored_name in target.data.edit_bones:
+                    mirrored_bone = target.data.edit_bones[mirrored_name]
+                    if mirrored_bone.use_connect:
+                        mirrored_bone.use_connect = False
+                        disconnected_bones += 1
+                        processed_bones.add(mirrored_name)
+
+        # Restore the original mode
+        if original_mode != 'EDIT':
+            bpy.ops.object.mode_set(mode=original_mode)
+
+        self.report({'INFO'}, f"Disconnected {disconnected_bones} bones (including symmetric counterparts).")
+        return {'FINISHED'}
+
+class SNA_OT_ApplyConstraintsToBones(bpy.types.Operator):
+    """Apply all existing constraints on bones and bake their effects"""
+    bl_idname = "sna.apply_constraints_to_bones"
+    bl_label = "Apply Constraints on Bones"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        target = context.scene.sna_target_object
+
+        if not target or target.type != "ARMATURE":
+            self.report({'ERROR'}, "A valid target armature must be selected.")
+            return {'CANCELLED'}
+
+        # Ensure the armature is in Pose Mode
+        if target.mode != 'POSE':
+            bpy.context.view_layer.objects.active = target
+            bpy.ops.object.mode_set(mode='POSE')
+
+        # Dependency graph for evaluated objects
+        depsgraph = context.evaluated_depsgraph_get()
+        target_eval = target.evaluated_get(depsgraph)
+
+        baked_bones = 0
+        for pose_bone in target.pose.bones:
+            # Get the evaluated matrix of the bone
+            eval_bone = target_eval.pose.bones[pose_bone.name]
+            final_matrix = eval_bone.matrix
+
+            # Remove all constraints from the bone
+            while pose_bone.constraints:
+                pose_bone.constraints.remove(pose_bone.constraints[0])
+
+            # Apply the final matrix to the pose bone
+            pose_bone.matrix = final_matrix
+            baked_bones += 1
+
+        # Force update to ensure changes are applied
+        bpy.context.view_layer.update()
+
+        self.report({'INFO'}, f"Baked constraints for {baked_bones} bones.")
+        return {'FINISHED'}
+
+
+
+
+# Register and unregister
+
+def register_properties():
+    bpy.types.Scene.sna_source_object = bpy.props.PointerProperty(
+        name="Base",
+        type=bpy.types.Object,
+        description="Source armature to copy transforms from"
+    )
+    bpy.types.Scene.sna_target_object = bpy.props.PointerProperty(
+        name="Change",
+        type=bpy.types.Object,
+        description="Target armature to copy transforms to"
+    )
+    bpy.types.Scene.sna_source_bone = bpy.props.StringProperty(
+        name="Source Bone",
+        description="Selected source bone"
+    )
+    bpy.types.Scene.sna_target_bone = bpy.props.StringProperty(
+        name="Target Bone",
+        description="Selected target bone"
+    )
+    
+
+
+def unregister_properties():
+    del bpy.types.Scene.sna_source_object
+    del bpy.types.Scene.sna_target_object
+    del bpy.types.Scene.sna_source_bone
+    del bpy.types.Scene.sna_target_bone
+
+
+classes = [
+    SNA_OT_PickSourceBone,
+    SNA_OT_PickTargetBone,
+    SNA_OT_DisconnectAllBones,
+    SNA_PT_CopyBoneTransformsPanel,
+    SNA_OT_AddManualConstraint,
+    SNA_OT_AddCopyTransforms,
+    SNA_OT_RemoveCopyTransforms,
+    SNA_OT_ApplyConstraintsToBones,
+    OT_OpenSupportLink,
+    OT_OpenHelpLink,
+]
+
+
+def register():
+    # Unregister previously registered classes if necessary
+    for cls in classes:
+        try:
+            bpy.utils.unregister_class(cls)
+        except RuntimeError:
+            pass  # Ignore errors if the class was not previously registered
+
+    # Register classes
+    for cls in classes:
+        bpy.utils.register_class(cls)
+
+    # Register custom properties
+    register_properties()
+
+    # Add the handler for automatic bone selection if not already present
+    if update_bone_selection not in bpy.app.handlers.depsgraph_update_post:
+        bpy.app.handlers.depsgraph_update_post.append(update_bone_selection)
+
+    bpy.utils.register_class(SNA_OT_DisconnectSelectedBones)
+
+
+def unregister():
+    # Remove the handler if it exists
+    if update_bone_selection in bpy.app.handlers.depsgraph_update_post:
+        bpy.app.handlers.depsgraph_update_post.remove(update_bone_selection)
+
+    # Unregister classes
+    for cls in reversed(classes):
+        try:
+            bpy.utils.unregister_class(cls)
+        except RuntimeError:
+            pass  # Ignore errors if the class was not registered
+
+
+
+    # Unregister custom properties
+    unregister_properties()
+
+    bpy.utils.unregister_class(SNA_OT_DisconnectSelectedBones)
+
+
+
+
+
+if __name__ == "__main__":
+    register()
