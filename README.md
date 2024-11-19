@@ -48,5 +48,5 @@ Match outfits in seconds.
 <!-- 주석 -->
 you can support me if u want more update!
 <!-- 주석 -->
-## ![SUPPORT]https://www.paypal.com/paypalme/ijgusin?country.x=KR&locale.x=ko_KR
+## SUPPORT : https://www.paypal.com/paypalme/ijgusin?country.x=KR&locale.x=ko_KR
 
