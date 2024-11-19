@@ -6,6 +6,10 @@ This tool is designed to help you match mismatched clothing to your avatar.
 <!-- 주석 -->
 # HOW TO USE
 <!-- 주석 -->
+####Add addon in blender ( supported upto 3.3 )
+<!-- 주석 -->
+####Find addon in Tool Sidebar
+
 ### >Match same bone just in Oneclick
 <!-- 주석 -->
 ![1](https://github.com/user-attachments/assets/7094acae-8685-42da-9696-7aa89d3e4b52)
