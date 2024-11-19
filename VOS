@@ -82,7 +82,7 @@ class OT_OpenHelpLink(bpy.types.Operator):
 
     def execute(self, context):
         # Replace the URL below with your desired link
-        webbrowser.open("https://www.youtube.com/")
+        webbrowser.open("https://github.com/Dan-dock/VRC/tree/main")
         return {'FINISHED'}
 
 class SNA_OT_AddCopyTransforms(bpy.types.Operator):
