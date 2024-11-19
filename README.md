@@ -14,7 +14,7 @@ Match outfits in seconds.
 <!-- 주석 -->
 #### Find addon in Tool Sidebar
 
-### > Match same bone just in Oneclick
+### > Match same bone just in Oneclick ( 뼈대 맞춰주기)
 <!-- 주석 -->
 ![1](https://github.com/user-attachments/assets/7094acae-8685-42da-9696-7aa89d3e4b52)
 <!-- 주석 -->
