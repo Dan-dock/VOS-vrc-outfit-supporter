@@ -45,5 +45,8 @@ Match outfits in seconds.
 (언제까지나 작업을 도와주는 툴이지 완벽하게 맞춰주지는 않습니다.)
 
 ## > -this is tool using bone Copy Transforms Constraint-
-
+<!-- 주석 -->
+you can support me if u want more update!
+<!-- 주석 -->
+![5](https://www.paypal.com/paypalme/ijgusin?country.x=KR&locale.x=ko_KR)
 
