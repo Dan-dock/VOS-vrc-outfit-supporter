@@ -5,11 +5,17 @@ HOW TO USE
 
 Match same bone just in Oneclick
 ![1](https://github.com/user-attachments/assets/7094acae-8685-42da-9696-7aa89d3e4b52)
+
+
 discconect bone in pose mode
 ![2](https://github.com/user-attachments/assets/022e6c16-b268-4071-afb5-cc2c7fcb75e1)
 ![3](https://github.com/user-attachments/assets/890c4c27-af12-45dd-881b-b50397de7065)
+
+
 disable constraint
 ![4](https://github.com/user-attachments/assets/695daaa1-18a4-4b01-a7ef-f6d731ec762f)
+
+
 Apply All constraint
 ![5](https://github.com/user-attachments/assets/42088b08-a2d3-4a95-a189-077b112f9814)
 
