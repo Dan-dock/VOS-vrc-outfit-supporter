@@ -1,3 +1,5 @@
+<img src="https://capsule-render.vercel.app/api?type=모양&color=색상코드&height=높이&section=header&text=텍스트&fontSize=텍스트크기" />
+
 This tool is designed to help you match mismatched clothing to your avatar.
 맞지 않는 의상을 아바타에 대응 시켜주는 걸 도와주는 툴입니다.
 
