@@ -15,6 +15,7 @@ This tool is designed to help you match mismatched clothing to your avatar.
 ![1](https://github.com/user-attachments/assets/7094acae-8685-42da-9696-7aa89d3e4b52)
 <!-- 주석 -->
 
+
 ### > discconect bone in pose mode
 <!-- 주석 -->
 ![2](https://github.com/user-attachments/assets/022e6c16-b268-4071-afb5-cc2c7fcb75e1)
@@ -22,6 +23,10 @@ This tool is designed to help you match mismatched clothing to your avatar.
 ![3](https://github.com/user-attachments/assets/890c4c27-af12-45dd-881b-b50397de7065)
 <!-- 주석 -->
 
+### > add constraint
+<!-- 주석 -->
+![11)](https://github.com/user-attachments/assets/944f1bbb-5d43-4d2b-8e8f-0141f852639b)
+<!-- 주석 -->
 ### > disable constraint
 <!-- 주석 -->
 ![4](https://github.com/user-attachments/assets/695daaa1-18a4-4b01-a7ef-f6d731ec762f)
