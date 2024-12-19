@@ -10,7 +10,7 @@ Match outfits in seconds.
 <!-- 주석 -->
 # HOW TO USE
 <!-- 주석 -->
-#### Add addon in blender ( supported upto 3.3 )
+#### Add addon in blender ( supported upto 3.6 )
 <!-- 주석 -->
 #### Find addon in Tool Sidebar
 
